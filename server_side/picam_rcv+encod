@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Script de reception du flux depuis raspberry + encodage en local
+# A lancer depuis le serveur pour recevoir le flux du raspberry
+
+listen_to_port=5004
+rtmp_endpoint="rtmp://127.0.0.1:1935/live"
+
+echo "Listening on $streaming_to_port"
+
+gst-launch-1.0 -e udpsrc port=$listen_to_port ! application/x-rtp, payload=96 ! rtph264depay ! video/x-h264 ! queue ! flvmux name=mux ! rtmpsink location=$rtmp_endpoint
+

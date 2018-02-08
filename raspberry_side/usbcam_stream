@@ -1,0 +1,17 @@
+
+#!/bin/bash
+
+# Script vers Encodeur
+# A lancer depuis le raspberry AVEC WEBCAM USB !
+
+streaming_to_ip=0.0.0.0
+streaming_to_port=5004
+
+vid_dev="/dev/video0"
+vid_w=1280
+vid_h=720
+vid_fps=40
+
+echo "Streaming to $streaming_to_ip (port $streaming_to_port)"
+
+gst-launch-1.0 -vv -e v4l2src device=$vid_dev  ! "video/x-raw,width=$vid_w,height=$vid_h,framerate=$vid_fps" ! queue ! omxh264enc  ! h264parse ! rtph264pay ! udpsink host=$streaming_to_ip port=$streaming_to_port

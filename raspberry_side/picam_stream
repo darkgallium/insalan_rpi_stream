@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Script vers Encodeur
+# A lancer depuis le raspberry AVEC PICAM !
+
+streaming_to_ip=0.0.0.0
+streaming_to_port=5004
+
+vid_h=1280
+vid_w=720
+vid_fps=40
+
+echo "Streaming to $streaming_to_ip (port $streaming_to_port)"
+
+raspivid -t 0 -w $vid_h -h $vid_w -fps $vid_fps -b 2500000 -p 0,0,640,480 -o - | gst-launch-1.0 fdsrc ! h264parse ! rtph264pay config-interval=1 pt=96 ! udpsink host=$streaming_to_ip port=$streaming_to_port
+
