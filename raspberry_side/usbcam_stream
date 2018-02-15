@@ -16,4 +16,6 @@ encd_br=1000000
 
 echo "Streaming to $streaming_to_ip (port $streaming_to_port)"
 
-gst-launch-1.0 -vv -e v4l2src device=$vid_dev  ! "video/x-raw,width=$vid_w,height=$vid_h,framerate=$vid_fps" ! queue ! omxh264enc control-rate=1 target-bitrate=$encd_br ! video/x-h264,stream-format=byte-stream,profile=high ! h264parse config-interval=2 ! rtph264pay ! udpsink host=$streaming_to_ip port=$streaming_to_port
+gst-launch-1.0 -vv -e v4l2src device=/dev/video0  ! "video/x-raw,width=1280,height=720,framerate=30/1" ! queue ! omxh264enc control-rate=1 target-bitrate=2000000 ! video/x-h264,stream-format=byte-stream,profile=high ! h264parse config-interval=2 ! rtph264pay ! udpsink host=172.16.1.147 port=5004
+
+#gst-launch-1.0 -vv -e v4l2src device=$vid_dev  ! "video/x-raw,width=$vid_w,height=$vid_h,framerate=$vid_fps" ! queue ! omxh264enc control-rate=1 target-bitrate=$encd_br ! video/x-h264,stream-format=byte-stream,profile=high ! h264parse config-interval=2 ! rtph264pay ! udpsink host=$streaming_to_ip port=$streaming_to_port
