@@ -1,4 +1,4 @@
-# rpi_stream
+# insalan_rpi_stream
 
 Ce projet vise à pouvoir fournir un flux vidéo en direct de divers spots de l'INSALAN (scène, joueurs...) utilisable par les streameurs et l'équipe scène.
 

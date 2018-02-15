@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Script de reception du flux depuis raspberry + videosink pour l'équipe scène
+# VERSION LINUX
+# A lancer depuis le serveur pour recevoir le flux du raspberry
+
+listen_to_port=5004
+
+echo "Listening on $streaming_to_port"
+
+gst-launch-1.0 -e udpsrc port=$listen_to_port ! application/x-rtp, payload=96 ! rtph264depay ! queue ! avdec_h264 ! videoconvert ! autovideosink sync=false
+
